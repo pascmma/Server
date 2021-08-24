@@ -9,7 +9,7 @@ const config = {
     server:'',
     database:'',
     options:{
-        trustedconnection:false,   
+        trustedconnection:true,   
         enableArithAbort:true,
         encrypt:false,
 
