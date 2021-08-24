@@ -35,7 +35,7 @@ async function testPrueba(){
         let pool = await sql.connect(config);
         let result = await pool.request()
             .input('discount',sql.BigInt,45922)
-            .execute('[dbo].[csGetSocioAntiguedad');
+            .execute('csGetSocioAntiguedad');
         console.log(result)
 
         
@@ -56,9 +56,7 @@ app.get("/getData",function(req,res,next){
 })
 
 
-
-//testPrueba();
-
+testPrueba();
 
 
 module.exports = {

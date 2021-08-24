@@ -10,7 +10,7 @@ let cors = require('cors');
  * Settings
  */
 app.set('port',process.env.PORT || 5000);
-
+    
 /*
  *Middlewares 
  */
