@@ -34,9 +34,10 @@ async function testPrueba(){
     try {
         let pool = await sql.connect(config);
         let result = await pool.request()
-            .input('discount',sql.BigInt,45922)
+            .input('PersonaID',sql.BigInt,45922)
             .execute('csGetSocioAntiguedad');
-        console.log(result)
+        console.log(result.recordsets)
+        return (await result).recordsets;
 
         
     } catch (error) {
@@ -46,17 +47,16 @@ async function testPrueba(){
 }
 
 
-
-
+//routes 
 
 app.get("/getData",function(req,res,next){
-    getDeportes().then(result=>{
+    testPrueba().then(result=>{
         res.json(result[0]);
-    })
+    });
 })
 
 
-testPrueba();
+//testPrueba();
 
 
 module.exports = {

@@ -1,3 +1,6 @@
+/**
+ * Ruta de una area especifica
+ */
 const {Router} = require('express');
 const router = Router();
 
