@@ -10,7 +10,7 @@ let moroParam ="AU";
 var fechaIni =new Date("2021-07-01");
 var fechaFin=new Date("2021-08-01");
 let aux;
-
+let fechainicial;
 app.listen(app.get('port'),()=>console.log("server funcionando en: ",app.get('port')));
 
 //20210801', '20210825'
@@ -26,7 +26,7 @@ async function getDeportes(){
         
     } catch (err) {
         console.log(err);
-
+        
         
     }
 }
@@ -35,16 +35,19 @@ async function getDeportes(){
 // Tipo de descuento CHAR(3)
 let desde;
 let hasta;
-async function consultaIngresosCFP(){
+
+async function consultaIngresosCFP(fechainicial){
+        console.log("desde antes:" ,fechainicial[0])
+        console.log("hasta antes:",fechainicial[1])
     try {
         let pool = await sql.connect(config);
         let result = await pool.request()
-            .input('Desde',sql.DateTime,desde = new Date(fechaIni))
-            .input('Hasta',sql.DateTime,hasta = new Date(fechaFin))
+            .input('Desde',sql.DateTime,desde = fechainicial[0])
+            .input('Hasta',sql.DateTime,hasta = fechainicial[1])
             .execute('PWRPCON_IngresosCFP');
         console.log(result.recordsets)
-        console.log(desde)
-        console.log(hasta)
+        console.log("desde :" ,desde)
+        console.log("hasta :",hasta)
         return (await result).recordsets;
 
         
@@ -87,7 +90,6 @@ async function testPrueba(){
     }
 }
 
-let fechainicial=[];
 
 //routes 
 app.get("/consultaMoro", function(req,res,next){
@@ -96,12 +98,18 @@ app.get("/consultaMoro", function(req,res,next){
 })
 
 app.get("/consultaIngresos", function(req,res,next){
-    consultaIngresosCFP().then(result=> {res.json(result)})
+    let fechainicial= ['2021-07-01','2021-08-01'];
+    consultaIngresosCFP(fechainicial).then(result=> {res.json(result)})
 
 })
 
 app.post("/consultaIngresos", function(req,res,next){
+   let fechainicial = req.body;
+    consultaIngresosCFP(fechainicial).then(result=>{res.json(result)})
+    console.log(fechainicial);
+
     
+
 } )
 
 app.get("/getData",function(req,res,next){
