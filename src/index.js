@@ -11,6 +11,7 @@ var fechaIni =new Date("2021-07-01");
 var fechaFin=new Date("2021-08-01");
 let aux;
 let fechainicial;
+let tipoEstado;
 app.listen(app.get('port'),()=>console.log("server funcionando en: ",app.get('port')));
 
 //20210801', '20210825'
@@ -39,39 +40,41 @@ let hasta;
 async function consultaIngresosCFP(fechainicial){
         console.log("desde antes:" ,fechainicial[0])
         console.log("hasta antes:",fechainicial[1])
-    try {
+    
         let pool = await sql.connect(config);
+        console.log("Conexion establecida en la base de datos")
         let result = await pool.request()
-            .input('Desde',sql.DateTime,desde = fechainicial[0])
-            .input('Hasta',sql.DateTime,hasta = fechainicial[1])
+            .input('Desde',sql.DateTime,(fechainicial[0]))
+            .input('Hasta',sql.DateTime,(fechainicial[1]))
             .execute('PWRPCON_IngresosCFP');
-        console.log(result.recordsets)
-        console.log("desde :" ,desde)
-        console.log("hasta :",hasta)
+        //console.log(result.recordsets)
+        console.log("desde :" ,fechainicial[0])
+        console.log("hasta :" ,fechainicial[1])
+        pool.then(()=>{return  await pool.close()})
         return (await result).recordsets;
 
         
-    } catch (error) {
-        console.log(error); console.log(desde)
-        console.log(hasta)
+    
         
-    }
+    
 }
 
-async function consultaMorosidad(){
-    try {
+async function consultaMorosidad(estado){
+    console.log("el valor de el estado es:", estado);
+    
         let pool = await sql.connect(config);
+        console.log("Conexion establecida en la base de datos con los para",estado)
         let result = await pool.request()
-            .input('Estado',sql.Char,moroParam)
+            .input('Estado',sql.Char,estado)
             .execute('PCAJREP_Morosidad');
-            aux =(await result).recordsets;
-            console.log(aux)
+            console.log("el estado de la consulta es",estado)
+           // aux =(await result).recordsets;
+            console.log((result).recordsets);
+            pool.then(()=>{return await pool.close()})
             return(await result).recordsets;
+
         
-    } catch (error) {
-        console.log(error);
-        
-    }
+    
     
 }
 async function testPrueba(){
@@ -80,7 +83,7 @@ async function testPrueba(){
         let result = await pool.request()
             .input('PersonaID',sql.BigInt,45922)
             .execute('csGetSocioAntiguedad');
-        console.log(result.recordsets)
+        //console.log(result.recordsets)
         return (await result).recordsets;
 
         
@@ -93,31 +96,38 @@ async function testPrueba(){
 
 //routes 
 app.get("/consultaMoro", function(req,res,next){
-    consultaMorosidad().then(result=>{res.json(result[0])})
-    console.log(aux)
+    tipoEstado = 'AC';
+    console.log("")
+    consultaMorosidad(tipoEstado).then(result=>{res.json(result)})
+    //console.log(aux)
 })
 
+app.post("/consultaMoro", function(req,res,next){
+    console.log("el request body para moros es ", req.body)
+    let tipoEstado = req.body;
+    console.log("la consulta con el estado es",tipoEstado);
+    consultaMorosidad(tipoEstado).then(result=>{res.json(result)});
+    
+})
+
+
 app.get("/consultaIngresos", function(req,res,next){
-    let fechainicial= ['2021-07-01','2021-08-01'];
+     fechainicial= ['2021-07-01','2021-07-03'];
     consultaIngresosCFP(fechainicial).then(result=> {res.json(result)})
 
 })
 
 app.post("/consultaIngresos", function(req,res,next){
+    console.log("el request body para fecha es ", req.body)
    let fechainicial = req.body;
     consultaIngresosCFP(fechainicial).then(result=>{res.json(result)})
-    console.log(fechainicial);
-
-    
+    console.log("si se pudo conectar", fechainicial);
 
 } )
 
 app.get("/getData",function(req,res,next){
     testPrueba().then(result=> {res.json(result[0])})
 })
-
-
-
 
 //testPrueba();
 

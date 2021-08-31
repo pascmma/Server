@@ -8,8 +8,8 @@ const config = {
     password:process.env.PASSWORD,
     server:process.env.SERVER,
     database:process.env.DATABASE,
-    connectionTimeout:300000,
-    requestTimeout:300000,
+    connectionTimeout:3000000,
+    requestTimeout:3000000,
     options:{
         trustedconnection:true,   
         enableArithAbort:true,
