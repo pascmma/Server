@@ -12,6 +12,8 @@ var fechaFin=new Date("2021-08-01");
 let aux;
 let fechainicial;
 let tipoEstado;
+const usuarioTest = "martin@gmail.com";
+const passwordTest = "clubInter1";
 app.listen(app.get('port'),()=>console.log("server funcionando en: ",app.get('port')));
 
 //20210801', '20210825'
@@ -50,14 +52,22 @@ async function consultaIngresosCFP(fechainicial){
         //console.log(result.recordsets)
         console.log("desde :" ,fechainicial[0])
         console.log("hasta :" ,fechainicial[1])
-        pool.then(()=>{return  await pool.close()})
         return (await result).recordsets;
+};
 
-        
-    
-        
-    
+async function validarLogin(body){
+    console.log("LOS VALORES DEL LOGIN",body);
+    if(body.username === usuarioTest && body.password === passwordTest){
+        let result = body.username;
+        console.log("es valido el usuario", result);
+        return result;
+    }
+    else{
+        let result = "invalido"
+        return result
+    }
 }
+
 
 async function consultaMorosidad(estado){
     console.log("el valor de el estado es:", estado);
@@ -70,7 +80,7 @@ async function consultaMorosidad(estado){
             console.log("el estado de la consulta es",estado)
            // aux =(await result).recordsets;
             console.log((result).recordsets);
-            pool.then(()=>{return await pool.close()})
+            pool.then(()=>{return pool.close()})
             return(await result).recordsets;
 
         
@@ -109,10 +119,10 @@ app.post("/consultaMoro", function(req,res,next){
     consultaMorosidad(tipoEstado).then(result=>{res.json(result)});
     
 })
-
+console.log("PRUEBA DE GET FECHAS DESPUES DEL POST",fechainicial);
 
 app.get("/consultaIngresos", function(req,res,next){
-     fechainicial= ['2021-07-01','2021-07-03'];
+     fechainicial= ['2021-01-01','2021-09-07'];
     consultaIngresosCFP(fechainicial).then(result=> {res.json(result)})
 
 })
@@ -124,6 +134,11 @@ app.post("/consultaIngresos", function(req,res,next){
     console.log("si se pudo conectar", fechainicial);
 
 } )
+app.post("/login",function(req,res,next){
+    console.log("REQUEST :",req.body);
+    validarLogin(req.body).then(result=>{res.json(result)})
+    
+})
 
 app.get("/getData",function(req,res,next){
     testPrueba().then(result=> {res.json(result[0])})
