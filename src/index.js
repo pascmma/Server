@@ -1,6 +1,7 @@
 const config = require('./config');
 const app = require('./app');
 const sql = require('mssql');
+const users = require('./usuarios.json')
 require('dotenv').config();
 
 
@@ -67,7 +68,9 @@ async function validarLogin(body){
         return result
     }
 }
+async function usuariosJson(){
 
+}
 
 async function consultaMorosidad(estado){
     console.log("el valor de el estado es:", estado);
@@ -135,7 +138,7 @@ app.post("/consultaIngresos", function(req,res,next){
 
 } )
 app.post("/login",function(req,res,next){
-    console.log("REQUEST :",req.body);
+    console.log("REQUEST SOLICITADAA :",req.body);
     validarLogin(req.body).then(result=>{res.json(result)})
     
 })
@@ -144,8 +147,15 @@ app.get("/getData",function(req,res,next){
     testPrueba().then(result=> {res.json(result[0])})
 })
 
-//testPrueba();
+app.get("/usuarios",function(req,res,next){
+    res.json(users);
 
+    
+    
+})
+
+//testPrueba();
+console.log(users);
 
 module.exports = {
     getDeportes : getDeportes,

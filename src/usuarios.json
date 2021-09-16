@@ -1,5 +1,5 @@
-{
-    "usuarios":[
+[
+    
         {
             "id":1,
             "nombre":"martin",
@@ -8,9 +8,9 @@
         },
         {
             "id":2,
-            "nombre":"samuel",
-            "username":"samuel@gmail.com",
+            "nombre":"mma",
+            "username":"mma@gmail.com",
             "password":"01234567"
         }
-    ]
-}
+    
+]
