@@ -14,7 +14,7 @@ let aux;
 let fechainicial;
 let tipoEstado;
 const usuarioTest = "martin@gmail.com";
-const passwordTest = "clubInter1";
+const passwordTest = "1234567";
 app.listen(app.get('port'),()=>console.log("server funcionando en: ",app.get('port')));
 
 //20210801', '20210825'
@@ -53,7 +53,7 @@ async function consultaIngresosCFP(fechainicial){
         //console.log(result.recordsets)
         console.log("desde :" ,fechainicial[0])
         console.log("hasta :" ,fechainicial[1])
-        return (await result).recordsets;
+        return result.recordsets;
 };
 
 async function validarLogin(body){
@@ -68,9 +68,7 @@ async function validarLogin(body){
         return result
     }
 }
-async function usuariosJson(){
 
-}
 
 async function consultaMorosidad(estado){
     console.log("el valor de el estado es:", estado);
@@ -83,8 +81,7 @@ async function consultaMorosidad(estado){
             console.log("el estado de la consulta es",estado)
            // aux =(await result).recordsets;
             console.log((result).recordsets);
-            pool.then(()=>{return pool.close()})
-            return(await result).recordsets;
+            return result.recordsets;
 
         
     
@@ -97,7 +94,7 @@ async function testPrueba(){
             .input('PersonaID',sql.BigInt,45922)
             .execute('csGetSocioAntiguedad');
         //console.log(result.recordsets)
-        return (await result).recordsets;
+        return result.recordsets;
 
         
     } catch (error) {
@@ -155,7 +152,7 @@ app.get("/usuarios",function(req,res,next){
 })
 
 //testPrueba();
-console.log(users);
+//console.log(users);
 
 module.exports = {
     getDeportes : getDeportes,
