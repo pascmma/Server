@@ -1,9 +1,9 @@
 const config = require('./config');
 const app = require('./app');
 const sql = require('mssql');
-const users = require('./usuarios.json')
+const users = require('./usuarios')
 require('dotenv').config();
-
+const md5 = require('md5');
 
 const consulta = "SELECT * FROM Tbl_Deporte;"
 let query;
@@ -14,7 +14,8 @@ let aux;
 let fechainicial;
 let tipoEstado;
 const usuarioTest = "martin@gmail.com";
-const passwordTest = "1234567";
+const admin = "adminosaurio"
+const passwordTest = "conta";
 app.listen(app.get('port'),()=>console.log("server funcionando en: ",app.get('port')));
 
 //20210801', '20210825'
@@ -56,8 +57,21 @@ async function consultaIngresosCFP(fechainicial){
         return result.recordsets;
 };
 
+
+const users_temp = users;
+const pruebaUser = {"username":"adminosaurio", "password":"leadmin0"}
+
+
+
+
 async function validarLogin(body){
     console.log("LOS VALORES DEL LOGIN",body);
+    const users_temp = users;
+    
+    const usuario = users_temp.map(item => {
+        item.username === body.username ? usuario= item  : item 
+    })
+
     if(body.username === usuarioTest && body.password === passwordTest){
         let result = body.username;
         console.log("es valido el usuario", result);
@@ -83,9 +97,6 @@ async function consultaMorosidad(estado){
             console.log((result).recordsets);
             return result.recordsets;
 
-        
-    
-    
 }
 async function testPrueba(){
     try {
