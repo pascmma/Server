@@ -1,5 +1,5 @@
 
-const users = require('./usuarios')
+const users = require('../usuarios.json')
 const md5 =require('md5')
 // validar las queries, ademas de tener los procedimeitnos y su nombre en la quer
 
@@ -15,15 +15,40 @@ switch (consulta) {
 }
 }
  // recibes de los us
-/** Verificacion que el usuario este  */
-const verificacionUno=(_body)=>{
-    const unico = users.filter(item =>{
-        return (item.username === _body.username )
-    })
-    console.log("Comprobando valicacion");
-    return (unico[0].password ===md5(_body.password) ? true:false)
+/* verificacion del tipo de usuario */
 
+
+
+/** Verificacion que el usuario este en los registros de la base de datos  */
+
+const verificacionUno= async(usuario)=>{
+    let obj = {}
+    const unico =  users.filter(item =>{
+        return (item.username === usuario.username )
+    })
+    console.log("USUARIO ", unico.length)
+    if(unico.length=== 0){
+        console.log("NO EXISTE USUARIO");
+    }
+    else{
+    
+    
+    console.log("Comprobando valicacion");
+    if(unico[0].password === md5(usuario.password)){
+        obj["nombre"] = unico[0].nombre
+        obj["username"] = unico[0].username
+        console.log("VALIDACION ACTIVADA..,")
+        return obj;
+    }
+    else{
+        return console.log("error en la pantalla")
+    }
 }
+}
+
+/**
+ * Con el usuario validado podemos ver que tipo de usuario es el registrado
+ */
 
 
 const autorizacionUsuario = async(usuarioss)=>{
@@ -43,3 +68,5 @@ const autorizacionUsuario = async(usuarioss)=>{
         
     }
 }
+
+module.exports = verificacionUno;

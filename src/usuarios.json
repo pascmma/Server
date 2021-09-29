@@ -3,49 +3,49 @@
             "id":0,
             "nombre":"eladmin",
             "username":"adminosaurio",
-            "password":"b1c0cd4ff84790a3ba5a93765ecd836f"
+            "password":"30b4949057e0da981712eaae4f746574"
         },
         {
             "id":1,
             "nombre":"Contabilidad",
             "username":"ccontabilidad",
-            "password":"f8db88ad29d144fc0ae552a6e6fc83bc"
+            "password":"9e483bc58746d29d2340a922daa1190c"
         },
         {
             "id":2,
             "nombre":"Gerencia",
             "username":"ggerencia",
-            "password":"9542d3a6b350ed3397e220686ada5a8c"
+            "password":"12ab5e1ad237c61351e189995850ea82"
         },
         {
             "id":3,
             "nombre":"ComiteDeportivo",
             "username":"ddeportivo",
-            "password":"4a3290e12348a7eb716d8513397a0dda"
+            "password":"cec72f50b6049ad0c6f3ea0a3d010594"
         },
         {
             "id":4,
             "nombre":"Logistica",
             "username":"llogistica",
-            "password":"c71e2efd4a9b5ccf17ace14e8198b286"
+            "password":"2d4c5aae47a864db55c44adca3095cac"
         },
         {
             "id":5,
             "nombre":"Vigilancia",
             "username":"vvigilancia",
-            "password":"238c81f32092ae456056f54efeb0c761"
+            "password":"2dcddfc7045c11fc2873848a30556ab1"
         },
         {
             "id":6,
             "nombre":"Presidencia",
             "username":"ppresidencia",
-            "password":"df7e4284f10939e1236d0990bfbe1f37"
+            "password":"d0fd492d149299f8bfb8f368a312d1f4"
         },
         {
             "id":7,
             "nombre":"RecursosHumanos",
             "username":"rehumanos",
-            "password":"92bded60b78d4efaa4281b8eb224926d"
+            "password":"e3557536baa2c67f5d464b7f2b26ea9a"
         }
     
 ]

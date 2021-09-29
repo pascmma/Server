@@ -7,6 +7,8 @@ const {body, ValidationResult} = require('express-validator');
 require('dotenv').config();
 let cors = require('cors');
 const { user } = require('./config');
+const middlewares = require('./controladores/middleware');
+
 
 
 /*
@@ -20,6 +22,7 @@ app.set('port',process.env.PORT || 5000);
 app.use(morgan('dev')); // para obtener algunso datos por consola
 app.use(cors());  //para evitar problemas con el paso de datos en el navegador
 app.use(express.json());  //para poder recibir datos en formato json
+//app.use()
 
 
 //rutas
