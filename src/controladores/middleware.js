@@ -28,7 +28,7 @@ const verificacionUno= async(usuario)=>{
     })
     console.log("USUARIO ", unico.length)
     if(unico.length=== 0){
-        console.log("NO EXISTE USUARIO");
+        console.log("NO EXISTE EL USUARIO ");
     }
     else{
     
@@ -37,7 +37,7 @@ const verificacionUno= async(usuario)=>{
     if(unico[0].password === md5(usuario.password)){
         obj["nombre"] = unico[0].nombre
         obj["username"] = unico[0].username
-        console.log("VALIDACION ACTIVADA..,")
+        console.log("VALIDACION CORRECTA..,")
         return obj;
     }
     else{
